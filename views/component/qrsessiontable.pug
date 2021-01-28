@@ -1,0 +1,28 @@
+
+table#example1.table.table-bordered.table-striped
+  thead
+    tr
+    each col, i in results.metaData
+      if (i<7)
+        th #{col.name}
+    th uuid-btn
+  tbody
+    each row in results.rows
+      tr
+        each data, i in row 
+          if (i<7)
+            if(i==6)
+              td #{data}
+              td 
+                a.btn.btn-outline-primary(href=`/qr/confirm?uuid=${data}`) confirm 
+                a.btn.btn-outline-primary(href=`/qr/image?uuid=${data}`) image 
+            else    
+              td #{data}
+        
+  tfoot
+    tr
+      each col, i in results.metaData
+        if (i<7)
+          th #{col.name}
+      th uuid-btn
+  

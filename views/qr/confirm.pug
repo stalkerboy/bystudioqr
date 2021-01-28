@@ -1,0 +1,101 @@
+extends ../layout/layout_simple
+
+block pagescripts 
+  script(src='/plugins/jquery-validation/jquery.validate.min.js')
+
+  script.
+    $(function () {
+      var access = `#{access}` ; 
+      if(access == 1) 
+        toastr.success("","입장 처리되었습니다.",{timeOut:4000, positionClass: "toast-bottom-center"});
+      else if(access == 2)
+        toastr.warning("","다시한번 확인해주세요.",{timeOut:4000, positionClass: "toast-bottom-center"});
+      
+      $('#uuidinput').focus();
+
+      $('#uuidinput').on("change paste keyup", getVistor);
+
+      //- $('#uuidinput').val();
+      if('#{uuid}'){
+        $('#uuidinput').val('#{uuid}');
+        getVistor();
+      }
+      
+    });
+
+    function getVistor(){ 
+      var uuid = $('#uuidinput').val();
+      if (uuid && uuid.charAt(uuid.length-1) == '*') {
+        $.ajax( {
+          url : "/qr/visitor",
+          type: "post",
+          dataType: "json",
+          data: {CD_UUID : uuid},
+          //  contentType: "application/json",
+          success: function( results ){
+            if(results && results.rows.length>0){ 
+              for(i in results.metaData){                
+                $("input[name='"+results.metaData[i].name+"']").val(results.rows[0][i])
+              }
+            }
+          },
+          error: function( jqXHR, status, error ){
+              console.error('error' + status );
+          }
+        })
+      }
+    }
+
+
+block content
+  .hold-transition.register-page
+    .register-box
+      .register-logo
+        a(href="/qr/confirm")
+          b QR
+          | 출입 시스템
+      .card
+        .card-body.register-card-body
+          form#qrForm(role='form', action='/qr/complete', method='post')
+            p.login-box-msg 출입정보 입력
+              .input-group.mb-3
+                input#uuidinput.form-control(name="CD_UUID" type="text" placeholder="QR CODE") 
+                .input-group-append
+                  .input-group-text
+                    span.fas.fa-user
+              .input-group.mb-3
+                input#nameinput.form-control(name="DS_HNAME" type="text" placeholder="성명")
+                .input-group-append
+                  .input-group-text
+                    span.fas.fa-user
+              .input-group.mb-3
+                input#deptinput.form-control(name="DS_DEPT" type="text" placeholder="소속")
+                .input-group-append
+                  .input-group-text
+                    span.fas.fa-user
+              .input-group.mb-3
+                input#phoneinput.form-control(name="DS_PHONE" type="text" placeholder="연락처")
+                .input-group-append
+                  .input-group-text
+                    span.fas.fa-user
+              .input-group.mb-3
+                input#purposeinput.form-control(name="DS_PURPOSE" type="text" placeholder="목적")
+                .input-group-append
+                  .input-group-text
+                    span.fas.fa-user
+              .input-group.mb-3
+                input#degreeinput.form-control(name="NO_DEGREE" type="text" placeholder="체온")
+                .input-group-append
+                  .input-group-text
+                    span.fas.fa-user
+
+                    
+                // /.col              
+            .social-auth-links.text-center
+              button.btn.btn-block.btn-primary(type='submit')
+                i.fa.fa-sign-in-alt.mr-2
+                |           입장하기
+            .social-auth-links.text-center
+              a.btn.btn-block.btn-danger(href="/qr/register")
+                i.fa.fa-clipboard-list.mr-2
+                |           등록하기

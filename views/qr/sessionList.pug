@@ -1,0 +1,151 @@
+extends ../layout/layout_default
+
+block pagescripts
+  script.
+    $(function () {
+    $("#example1").DataTable({
+    "responsive": true, "lengthChange": false, "autoWidth": false,
+    "buttons": [{text:"전체선택",action:function(){onClickSelectAll();}}, "copy", "excel", "pdf", "print", {text:"삭제",action:onClickDelete}, {text:"엑셀업로드", action:onClickExcelUpload }],
+    "oLanguage": { "sSearch": "조회된 데이터 검색" },
+    "select":{"style": "multi"},
+    "pageLength": 50
+    }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+    
+    $('#example1').on( 'click', 'tr', function () {
+        $(this).toggleClass('selected');
+        // console.log( $('#example1').DataTable().rows('.selected').data().length +' row(s) selected' );
+    } );
+    });
+    
+    //Date range picker
+    $('#reservation').daterangepicker({locale:{format:'YYYY-MM-DD'},  autoApply:true})
+
+    var startDate = '#{startDate}'? moment('#{startDate}', 'YYYYMMDD') : moment();
+    var endDate = '#{endDate}' ? moment('#{endDate}', 'YYYYMMDD') : moment() ;
+    $("#reservation").data('daterangepicker').setStartDate(startDate);
+    $("#reservation").data('daterangepicker').setEndDate(endDate);
+    
+    function onClickDateSearch(){ 
+      var startDate = $('#reservation').data('daterangepicker').startDate.format('YYYYMMDD');
+      var endDate = $('#reservation').data('daterangepicker').endDate.format('YYYYMMDD');
+      location.href = '/qr?startDate=' + startDate + '&endDate=' + endDate;
+    }
+
+    var selectAll = true;
+    function onClickSelectAll(){
+      selectAll = !selectAll;
+      if(selectAll)
+        $('#example1 tr').removeClass("selected");
+      else
+        $('#example1 tr').addClass("selected");
+    }
+
+    function onClickDelete(){
+      var selectedRow = $('#example1').DataTable().rows('.selected').data();
+      //- console.log(selectedRow.map(function(row){return row[6]}));
+      var data = selectedRow.map(function(row){return row[6];})
+      var data = [];
+      for(i in selectedRow){
+        data.push([selectedRow[i][6]]);
+      }
+      $.ajax( {
+        url : "/qr/delete",
+        type: "post",
+        dataType: "json",
+        data: {UUIDS:data},
+        //- contentType: "application/json",
+        success: function( results ){
+          //- if(results && results.rows.length>0){
+              toastr.success("","삭제완료.",{timeOut:2000, positionClass: "toast-bottom-center", onHidden:onClickDateSearch});
+          //- }
+        },
+        error: function( jqXHR, status, error ){
+            console.error('error' + status );
+        }
+      })
+    }
+
+
+    function onClickDateRefresh(){
+      $("#reservation").data('daterangepicker').setStartDate(moment());
+      $("#reservation").data('daterangepicker').setEndDate(moment());
+    }
+
+    function onClickExcelUpload(){
+      var newForm = $('<form></form>'); 
+      //set attribute (form) 
+      newForm.attr("enctype","multipart/form-data"); 
+      newForm.attr("name","newForm"); 
+      newForm.attr("method","post"); 
+      //- newForm.attr("target","_blank"); 
+      // create element & set attribute (input) 
+      newForm.append($('<input/>', {type: 'file', id: 'fileInput', name:'xlsx', accept:'.xlsx' }));       
+      // append form (to body)
+       newForm.appendTo('body'); 
+      //-  // submit form 
+       $("#fileInput").change(function(e){
+          $.ajax({
+            type: "POST",
+            enctype: 'multipart/form-data',
+            url: "/qr/excelupload",
+            data: new FormData(newForm[0]),
+            processData: false,
+            contentType: false,
+            cache: false,
+            timeout: 600000,
+            success: function (data) {
+              toastr.success("","추가완료.",{timeOut:2000, positionClass: "toast-bottom-center", onHidden:onClickDateSearch});
+            },
+            error: function (e) {
+                console.log("ERROR : ", e);
+                toastr.error("","error:"+e.toString(),{timeOut:4000, positionClass: "toast-bottom-center"});
+            }
+        });
+       });
+       $("#fileInput").click();
+
+    }
+
+
+block contentheader
+  section.content-header
+    .container-fluid
+      .row.mb-2
+        .col-sm-6
+          h1 QR 승인리스트
+        .col-sm-6
+          ol.breadcrumb.float-sm-right
+            li.breadcrumb-item
+              a(href="#") QR
+            li.breadcrumb-item.active 승인 List
+    // /.container-fluid
+
+block content
+  | #{title}
+  section.content
+  .container-fluid
+    .row
+      .col-12
+        .card
+          .card-header
+            .row
+              h3.card-title 날짜 검색
+            .row
+              .col-12
+                .input-group
+                  .input-group-prepend
+                    span.input-group-text
+                      i.far.fa-calendar-alt
+                  input#reservation.form-control.float-right(type="text")
+                  span.input-group-text(onclick="onClickDateRefresh();")
+                    i.fa.fa-redo
+                  span.input-group-text(onclick="onClickDateSearch();")
+                    i.fa.fa-search 검색
+          // /.card-header
+          .card-body
+            include ../component/qrsessiontable
+          // /.card-body
+        // /.card
+      // /.col
+    // /.row
+  // /.container-fluid

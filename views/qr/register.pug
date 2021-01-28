@@ -1,0 +1,53 @@
+extends ../layout/layout_simple
+
+block pagescripts 
+  script(src='/plugins/jquery-validation/jquery.validate.min.js')
+
+  script.
+    $(function () { 
+      
+    }); 
+    //Date range picker
+    $('#reservation').daterangepicker({locale:{format:'YYYY-MM-DD'},  autoApply:true})
+
+block content
+  .hold-transition.register-page
+    .register-box
+      .register-logo
+        a(href="/qr/confirm")
+          b QR
+          | 출입 시스템
+      .card
+        .card-body.register-card-body
+          form#qrForm(role='form', action='/qr/register', method='post')
+            p.login-box-msg 출입정보 입력
+              .input-group.mb-3
+                input#nameinput.form-control(name="DS_HNAME" type="text" placeholder="성명")
+                .input-group-append
+                  .input-group-text
+                    span.fas.fa-user
+              .input-group.mb-3
+                input#phoneinput.form-control(name="DS_PHONE" type="text" placeholder="연락처")
+                .input-group-append
+                  .input-group-text
+                    span.fas.fa-user
+              .input-group.mb-3
+                input#deptinput.form-control(name="DS_DEPT" type="text" placeholder="소속")
+                .input-group-append
+                  .input-group-text
+                    span.fas.fa-user
+              .input-group.mb-3
+                input#reservation.form-control.float-right(name="DT_BOOKING_RANGE" type="text")
+                .input-group-prepend
+                  span.input-group-text
+                    i.far.fa-calendar-alt
+              .input-group.mb-3
+                input#purposeinput.form-control(name="DS_PURPOSE" type="text" placeholder="목적")
+                .input-group-append
+                  .input-group-text
+                    span.fas.fa-user
+                // /.col              
+            .social-auth-links.text-center
+              button.btn.btn-block.btn-danger(type='submit')
+                i.fa.fa-clipboard-list.mr-2
+                |           등록하기

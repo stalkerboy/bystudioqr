@@ -1,0 +1,447 @@
+aside.main-sidebar.sidebar-dark-primary.elevation-4
+  // Brand Logo
+  a.brand-link(href="../../index3.html")
+    img.brand-image.img-circle.elevation-3(src="../../dist/img/AdminLTELogo.png" alt="AdminLTE Logo" style="opacity: .8")
+    span.brand-text.font-weight-light AdminLTE 3
+  // Sidebar
+  .sidebar
+    // Sidebar user (optional)
+    .user-panel.mt-3.pb-3.mb-3.d-flex
+      .image
+        img.img-circle.elevation-2(src="../../dist/img/user2-160x160.jpg" alt="User Image")
+      .info
+        a.d-block(href="#") Alexander Pierce
+    // SidebarSearch Form
+    .form-inline
+      .input-group(data-widget="sidebar-search")
+        input.form-control.form-control-sidebar(type="search" placeholder="Search" aria-label="Search")
+        .input-group-append
+          button.btn.btn-sidebar
+            i.fas.fa-search.fa-fw
+    // Sidebar Menu
+    nav.mt-2
+      ul.nav.nav-pills.nav-sidebar.flex-column(data-widget="treeview" role="menu" data-accordion="false")
+        //
+          Add icons to the links using the .nav-icon class
+          with font-awesome or any other icon font library
+        li.nav-item
+          a.nav-link(href="#")
+            i.nav-icon.fas.fa-tachometer-alt
+            p
+              | Dashboard
+              i.right.fas.fa-angle-left
+          ul.nav.nav-treeview
+            li.nav-item
+              a.nav-link(href="../../index.html")
+                i.far.fa-circle.nav-icon
+                p Dashboard v1
+            li.nav-item
+              a.nav-link(href="../../index2.html")
+                i.far.fa-circle.nav-icon
+                p Dashboard v2
+            li.nav-item
+              a.nav-link(href="../../index3.html")
+                i.far.fa-circle.nav-icon
+                p Dashboard v3
+        li.nav-item
+          a.nav-link(href="../widgets.html")
+            i.nav-icon.fas.fa-th
+            p
+              | Widgets
+              span.right.badge.badge-danger New
+        li.nav-item
+          a.nav-link(href="#")
+            i.nav-icon.fas.fa-copy
+            p
+              | Layout Options
+              i.fas.fa-angle-left.right
+              span.badge.badge-info.right 6
+          ul.nav.nav-treeview
+            li.nav-item
+              a.nav-link(href="../layout/top-nav.html")
+                i.far.fa-circle.nav-icon
+                p Top Navigation
+            li.nav-item
+              a.nav-link(href="../layout/top-nav-sidebar.html")
+                i.far.fa-circle.nav-icon
+                p Top Navigation + Sidebar
+            li.nav-item
+              a.nav-link(href="../layout/boxed.html")
+                i.far.fa-circle.nav-icon
+                p Boxed
+            li.nav-item
+              a.nav-link(href="../layout/fixed-sidebar.html")
+                i.far.fa-circle.nav-icon
+                p Fixed Sidebar
+            li.nav-item
+              a.nav-link(href="../layout/fixed-sidebar-custom.html")
+                i.far.fa-circle.nav-icon
+                p
+                  | Fixed Sidebar 
+                  small + Custom Area
+            li.nav-item
+              a.nav-link(href="../layout/fixed-topnav.html")
+                i.far.fa-circle.nav-icon
+                p Fixed Navbar
+            li.nav-item
+              a.nav-link(href="../layout/fixed-footer.html")
+                i.far.fa-circle.nav-icon
+                p Fixed Footer
+            li.nav-item
+              a.nav-link(href="../layout/collapsed-sidebar.html")
+                i.far.fa-circle.nav-icon
+                p Collapsed Sidebar
+        li.nav-item
+          a.nav-link(href="#")
+            i.nav-icon.fas.fa-chart-pie
+            p
+              | Charts
+              i.right.fas.fa-angle-left
+          ul.nav.nav-treeview
+            li.nav-item
+              a.nav-link(href="../charts/chartjs.html")
+                i.far.fa-circle.nav-icon
+                p ChartJS
+            li.nav-item
+              a.nav-link(href="../charts/flot.html")
+                i.far.fa-circle.nav-icon
+                p Flot
+            li.nav-item
+              a.nav-link(href="../charts/inline.html")
+                i.far.fa-circle.nav-icon
+                p Inline
+            li.nav-item
+              a.nav-link(href="../charts/uplot.html")
+                i.far.fa-circle.nav-icon
+                p uPlot
+        li.nav-item
+          a.nav-link(href="#")
+            i.nav-icon.fas.fa-tree
+            p
+              | UI Elements
+              i.fas.fa-angle-left.right
+          ul.nav.nav-treeview
+            li.nav-item
+              a.nav-link(href="../UI/general.html")
+                i.far.fa-circle.nav-icon
+                p General
+            li.nav-item
+              a.nav-link(href="../UI/icons.html")
+                i.far.fa-circle.nav-icon
+                p Icons
+            li.nav-item
+              a.nav-link(href="../UI/buttons.html")
+                i.far.fa-circle.nav-icon
+                p Buttons
+            li.nav-item
+              a.nav-link(href="../UI/sliders.html")
+                i.far.fa-circle.nav-icon
+                p Sliders
+            li.nav-item
+              a.nav-link(href="../UI/modals.html")
+                i.far.fa-circle.nav-icon
+                p Modals & Alerts
+            li.nav-item
+              a.nav-link(href="../UI/navbar.html")
+                i.far.fa-circle.nav-icon
+                p Navbar & Tabs
+            li.nav-item
+              a.nav-link(href="../UI/timeline.html")
+                i.far.fa-circle.nav-icon
+                p Timeline
+            li.nav-item
+              a.nav-link(href="../UI/ribbons.html")
+                i.far.fa-circle.nav-icon
+                p Ribbons
+        li.nav-item
+          a.nav-link(href="#")
+            i.nav-icon.fas.fa-edit
+            p
+              | Forms
+              i.fas.fa-angle-left.right
+          ul.nav.nav-treeview
+            li.nav-item
+              a.nav-link(href="../forms/general.html")
+                i.far.fa-circle.nav-icon
+                p General Elements
+            li.nav-item
+              a.nav-link(href="../forms/advanced.html")
+                i.far.fa-circle.nav-icon
+                p Advanced Elements
+            li.nav-item
+              a.nav-link(href="../forms/editors.html")
+                i.far.fa-circle.nav-icon
+                p Editors
+            li.nav-item
+              a.nav-link(href="../forms/validation.html")
+                i.far.fa-circle.nav-icon
+                p Validation
+        li.nav-item.menu-open
+          a.nav-link.active(href="#")
+            i.nav-icon.fas.fa-table
+            p
+              | Tables
+              i.fas.fa-angle-left.right
+          ul.nav.nav-treeview
+            li.nav-item
+              a.nav-link(href="../tables/simple.html")
+                i.far.fa-circle.nav-icon
+                p Simple Tables
+            li.nav-item
+              a.nav-link.active(href="../tables/data.html")
+                i.far.fa-circle.nav-icon
+                p DataTables
+            li.nav-item
+              a.nav-link(href="../tables/jsgrid.html")
+                i.far.fa-circle.nav-icon
+                p jsGrid
+        li.nav-header EXAMPLES
+        li.nav-item
+          a.nav-link(href="../calendar.html")
+            i.nav-icon.far.fa-calendar-alt
+            p
+              | Calendar
+              span.badge.badge-info.right 2
+        li.nav-item
+          a.nav-link(href="../gallery.html")
+            i.nav-icon.far.fa-image
+            p
+              | Gallery
+        li.nav-item
+          a.nav-link(href="../kanban.html")
+            i.nav-icon.fas.fa-columns
+            p
+              | Kanban Board
+        li.nav-item
+          a.nav-link(href="#")
+            i.nav-icon.far.fa-envelope
+            p
+              | Mailbox
+              i.fas.fa-angle-left.right
+          ul.nav.nav-treeview
+            li.nav-item
+              a.nav-link(href="../mailbox/mailbox.html")
+                i.far.fa-circle.nav-icon
+                p Inbox
+            li.nav-item
+              a.nav-link(href="../mailbox/compose.html")
+                i.far.fa-circle.nav-icon
+                p Compose
+            li.nav-item
+              a.nav-link(href="../mailbox/read-mail.html")
+                i.far.fa-circle.nav-icon
+                p Read
+        li.nav-item
+          a.nav-link(href="#")
+            i.nav-icon.fas.fa-book
+            p
+              | Pages
+              i.fas.fa-angle-left.right
+          ul.nav.nav-treeview
+            li.nav-item
+              a.nav-link(href="../examples/invoice.html")
+                i.far.fa-circle.nav-icon
+                p Invoice
+            li.nav-item
+              a.nav-link(href="../examples/profile.html")
+                i.far.fa-circle.nav-icon
+                p Profile
+            li.nav-item
+              a.nav-link(href="../examples/e-commerce.html")
+                i.far.fa-circle.nav-icon
+                p E-commerce
+            li.nav-item
+              a.nav-link(href="../examples/projects.html")
+                i.far.fa-circle.nav-icon
+                p Projects
+            li.nav-item
+              a.nav-link(href="../examples/project-add.html")
+                i.far.fa-circle.nav-icon
+                p Project Add
+            li.nav-item
+              a.nav-link(href="../examples/project-edit.html")
+                i.far.fa-circle.nav-icon
+                p Project Edit
+            li.nav-item
+              a.nav-link(href="../examples/project-detail.html")
+                i.far.fa-circle.nav-icon
+                p Project Detail
+            li.nav-item
+              a.nav-link(href="../examples/contacts.html")
+                i.far.fa-circle.nav-icon
+                p Contacts
+            li.nav-item
+              a.nav-link(href="../examples/faq.html")
+                i.far.fa-circle.nav-icon
+                p FAQ
+            li.nav-item
+              a.nav-link(href="../examples/contact-us.html")
+                i.far.fa-circle.nav-icon
+                p Contact us
+        li.nav-item
+          a.nav-link(href="#")
+            i.nav-icon.far.fa-plus-square
+            p
+              | Extras
+              i.fas.fa-angle-left.right
+          ul.nav.nav-treeview
+            li.nav-item
+              a.nav-link(href="#")
+                i.far.fa-circle.nav-icon
+                p
+                  | Login & Register v1
+                  i.fas.fa-angle-left.right
+              ul.nav.nav-treeview
+                li.nav-item
+                  a.nav-link(href="../examples/login.html")
+                    i.far.fa-circle.nav-icon
+                    p Login v1
+                li.nav-item
+                  a.nav-link(href="../examples/register.html")
+                    i.far.fa-circle.nav-icon
+                    p Register v1
+                li.nav-item
+                  a.nav-link(href="../examples/forgot-password.html")
+                    i.far.fa-circle.nav-icon
+                    p Forgot Password v1
+                li.nav-item
+                  a.nav-link(href="../examples/recover-password.html")
+                    i.far.fa-circle.nav-icon
+                    p Recover Password v1
+            li.nav-item
+              a.nav-link(href="#")
+                i.far.fa-circle.nav-icon
+                p
+                  | Login & Register v2
+                  i.fas.fa-angle-left.right
+              ul.nav.nav-treeview
+                li.nav-item
+                  a.nav-link(href="../examples/login-v2.html")
+                    i.far.fa-circle.nav-icon
+                    p Login v2
+                li.nav-item
+                  a.nav-link(href="../examples/register-v2.html")
+                    i.far.fa-circle.nav-icon
+                    p Register v2
+                li.nav-item
+                  a.nav-link(href="../examples/forgot-password-v2.html")
+                    i.far.fa-circle.nav-icon
+                    p Forgot Password v2
+                li.nav-item
+                  a.nav-link(href="../examples/recover-password-v2.html")
+                    i.far.fa-circle.nav-icon
+                    p Recover Password v2
+            li.nav-item
+              a.nav-link(href="../examples/lockscreen.html")
+                i.far.fa-circle.nav-icon
+                p Lockscreen
+            li.nav-item
+              a.nav-link(href="../examples/legacy-user-menu.html")
+                i.far.fa-circle.nav-icon
+                p Legacy User Menu
+            li.nav-item
+              a.nav-link(href="../examples/language-menu.html")
+                i.far.fa-circle.nav-icon
+                p Language Menu
+            li.nav-item
+              a.nav-link(href="../examples/404.html")
+                i.far.fa-circle.nav-icon
+                p Error 404
+            li.nav-item
+              a.nav-link(href="../examples/500.html")
+                i.far.fa-circle.nav-icon
+                p Error 500
+            li.nav-item
+              a.nav-link(href="../examples/pace.html")
+                i.far.fa-circle.nav-icon
+                p Pace
+            li.nav-item
+              a.nav-link(href="../examples/blank.html")
+                i.far.fa-circle.nav-icon
+                p Blank Page
+            li.nav-item
+              a.nav-link(href="../../starter.html")
+                i.far.fa-circle.nav-icon
+                p Starter Page
+        li.nav-item
+          a.nav-link(href="#")
+            i.nav-icon.fas.fa-search
+            p
+              | Search
+              i.fas.fa-angle-left.right
+          ul.nav.nav-treeview
+            li.nav-item
+              a.nav-link(href="../search/simple.html")
+                i.far.fa-circle.nav-icon
+                p Simple Search
+            li.nav-item
+              a.nav-link(href="../search/enhanced.html")
+                i.far.fa-circle.nav-icon
+                p Enhanced
+        li.nav-header MISCELLANEOUS
+        li.nav-item
+          a.nav-link(href="../../iframe.html")
+            i.nav-icon.fas.fa-ellipsis-h
+            p Tabbed IFrame Plugin
+        li.nav-item
+          a.nav-link(href="https://adminlte.io/docs/3.1/")
+            i.nav-icon.fas.fa-file
+            p Documentation
+        li.nav-header MULTI LEVEL EXAMPLE
+        li.nav-item
+          a.nav-link(href="#")
+            i.fas.fa-circle.nav-icon
+            p Level 1
+        li.nav-item
+          a.nav-link(href="#")
+            i.nav-icon.fas.fa-circle
+            p
+              | Level 1
+              i.right.fas.fa-angle-left
+          ul.nav.nav-treeview
+            li.nav-item
+              a.nav-link(href="#")
+                i.far.fa-circle.nav-icon
+                p Level 2
+            li.nav-item
+              a.nav-link(href="#")
+                i.far.fa-circle.nav-icon
+                p
+                  | Level 2
+                  i.right.fas.fa-angle-left
+              ul.nav.nav-treeview
+                li.nav-item
+                  a.nav-link(href="#")
+                    i.far.fa-dot-circle.nav-icon
+                    p Level 3
+                li.nav-item
+                  a.nav-link(href="#")
+                    i.far.fa-dot-circle.nav-icon
+                    p Level 3
+                li.nav-item
+                  a.nav-link(href="#")
+                    i.far.fa-dot-circle.nav-icon
+                    p Level 3
+            li.nav-item
+              a.nav-link(href="#")
+                i.far.fa-circle.nav-icon
+                p Level 2
+        li.nav-item
+          a.nav-link(href="#")
+            i.fas.fa-circle.nav-icon
+            p Level 1
+        li.nav-header LABELS
+        li.nav-item
+          a.nav-link(href="#")
+            i.nav-icon.far.fa-circle.text-danger
+            p.text Important
+        li.nav-item
+          a.nav-link(href="#")
+            i.nav-icon.far.fa-circle.text-warning
+            p Warning
+        li.nav-item
+          a.nav-link(href="#")
+            i.nav-icon.far.fa-circle.text-info
+            p Informational
+    // /.sidebar-menu
+  // /.sidebar
