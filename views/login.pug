@@ -1,18 +1,14 @@
-doctype html
-html(lang="en")
-  head
-    meta(charset="utf-8")
-    meta(name="viewport" content="width=device-width, initial-scale=1")
-    title AdminLTE 3 | Log in
-    // Google Font: Source Sans Pro
-    link(rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback")
-    // Font Awesome
-    link(rel="stylesheet" href="/plugins/fontawesome-free/css/all.min.css")
-    // icheck bootstrap
-    link(rel="stylesheet" href="/plugins/icheck-bootstrap/icheck-bootstrap.min.css")
-    // Theme style
-    link(rel="stylesheet" href="/stylesheets/adminlte/adminlte.min.css")
-  body.hold-transition.login-page
+extends ./layout/layout_simple
+
+block pagescripts
+  script.
+    var loginMsg = `#{loginMsg}` ; 
+    if(loginMsg)
+      toastr.warning("",loginMsg,{timeOut:3000, positionClass: "toast-bottom-center"});
+      
+
+block content
+  .hold-transition.login-page
     .login-box
       .login-logo
         a(href="../../index2.html")
@@ -22,45 +18,21 @@ html(lang="en")
       .card
         .card-body.login-card-body
           p.login-box-msg Sign in to start your session
-          form(action="../../index3.html" method="post")
+          form(action="/user/login" method="post")
             .input-group.mb-3
-              input.form-control(type="email" placeholder="Email")
+              input.form-control(name="username" type="text" placeholder="ID")
               .input-group-append
                 .input-group-text
-                  span.fas.fa-envelope
+                  span.fas.fa-user
             .input-group.mb-3
-              input.form-control(type="password" placeholder="Password")
+              input.form-control(name="password" type="password" placeholder="Password")
               .input-group-append
                 .input-group-text
                   span.fas.fa-lock
-            .row
-              .col-8
-                .icheck-primary
-                  input#remember(type="checkbox")
-                  label(for="remember")
-                    | Remember Me
               // /.col
-              .col-4
-                button.btn.btn-primary.btn-block(type="submit") Sign In
-              // /.col
-          .social-auth-links.text-center.mb-3
-            p - OR -
-            a.btn.btn-block.btn-primary(href="#")
-              i.fab.fa-facebook.mr-2
-              |  Sign in using Facebook
-            a.btn.btn-block.btn-danger(href="#")
-              i.fab.fa-google-plus.mr-2
-              |  Sign in using Google+
-          // /.social-auth-links
-          p.mb-1
-            a(href="forgot-password.html") I forgot my password
-          p.mb-0
-            a.text-center(href="register.html") Register a new membership
+            .social-auth-links.text-center.mb-3
+              button.btn.btn-block.btn-primary(type="submit")
+                i.fas.fa-qrcode.mr-2
+                |  LOGIN QR Manage System
         // /.login-card-body
     // /.login-box
-    // jQuery
-    script(src="/plugins/jquery/jquery.min.js")
-    // Bootstrap 4
-    script(src="/plugins/bootstrap/js/bootstrap.bundle.min.js")
-    // AdminLTE App
-    script(src="/javascripts/adminlte/adminlte.min.js")

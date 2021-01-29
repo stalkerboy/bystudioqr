@@ -1,62 +1,65 @@
 import userquery from "../db/queries/userquery";
-import bkfd2Password from "pbkdf2-password";
+import Bkfd2Password from "pbkdf2-password";
 import passport from "passport";
 import { Strategy as LocalStrategy } from "passport-local";
+import { dbexecute, dbParseResult, dbexecuteCur } from "./oracle";
+import OracleDB from "oracledb";
 
-export default function (app, conn) {
-  var hasher = bkfd2Password();
+export default function (app) {
+  const hasher = Bkfd2Password();
 
   app.use(passport.initialize());
   app.use(passport.session());
   passport.serializeUser(function (user, done) {
-    console.log("serializeUser : ");
-    var userloginfo = {
-      USER_ID: user.USER_ID,
-      USER_REG_TYPE: user.USER_REG_TYPE,
-      USER_NAME: user.USER_NAME,
+    const userloginfo = {
+      ID_USER: user.ID_USER,
+      DS_HNAME: user.DS_HNAME,
     };
     done(null, userloginfo);
   });
 
   passport.deserializeUser(function (userloginfo, done) {
-    console.log("deserializeUser : ", userloginfo);
     done(null, userloginfo);
   });
 
   passport.use(
-    new LocalStrategy(function (user_id, password, done) {
-      var sql = userquery.PASSPORT_LOGIN_LOCAL;
-      var userloginfo = [user_id, "LOCAL"];
-      conn.query(sql, userloginfo, function (err, results) {
-        if (err) {
-          return done("There is no user.");
+    new LocalStrategy(
+      {
+        usernameField: "username",
+        passwordField: "password",
+      },
+      async function (id_user, password, done) {
+        let sql = userquery.NSQPR_PASSPORT_LOGIN_LOCAL;
+        const result = await dbexecuteCur(sql, {
+          id_user,
+          cursor: { type: OracleDB.CURSOR, dir: OracleDB.BIND_OUT },
+        });
+
+        const users = await dbParseResult(result);
+        let user;
+        if (users.length === 1) {
+          user = users[0];
         }
-        var user = results[0];
+
         if (user) {
-          return hasher({ password: password, salt: user.USER_SALT }, function (err, pass, salt, hash) {
-            if (hash === user.USER_PW && user.LOGIN_FAIL_CNT < 20) {
-              sql = userquery.USER_LOGIN_SUCCESS;
-              conn.query(sql, userloginfo, function (err, results) {
-                if (err) done("Error.");
-              });
-              return done(null, user, { loginMsg: "로그인 성공" });
+          return hasher({ password: password, salt: user.CD_SALT }, async function (err, pass, salt, hash) {
+            if (hash === user.PW_ENCRYPT) {
+              sql = userquery.NSQPR_LOGIN_SUCCESS;
+              await dbexecute(sql, [id_user]);
+              const userinfo = { ID_USER: user.ID_USER, DS_HNAME: user.DS_HNAME };
+
+              return done(null, userinfo, { loginMsg: "로그인 성공" });
             } else {
-              sql = userquery.USER_LOGIN_FAIL;
-              conn.query(sql, userloginfo, function (err, results) {
-                if (err) done("Error.");
-              });
-              if (user.LOGIN_FAIL_CNT > 30) {
-                return done(null, false, { loginMsg: "로그인 시도 가능 횟수가 초과되었습니다." });
-              } else {
-                return done(null, false, { loginMsg: "로그인을 실패했습니다." });
-              }
+              sql = userquery.NSQPR_LOGIN_FAIL;
+              await dbexecute(sql, [id_user]);
+              return done(null, false, { loginMsg: "로그인을 실패했습니다." });
             }
           });
         } else {
           return done(null, false, { loginMsg: "로그인을 실패했습니다." });
         }
-      });
-    })
+      }
+    )
   );
 
   return passport;

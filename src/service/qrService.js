@@ -1,6 +1,6 @@
 import qrquery from "../db/queries/qrquery";
 
-import { dbexecuteCur, dbexecuteMany } from "../bymodules/oracle";
+import { dbexecute, dbexecuteCur, dbexecuteMany } from "../bymodules/oracle";
 import OracleDB from "oracledb";
 import { v4 as uuid } from "uuid";
 import Multiparty from "multiparty";
@@ -13,7 +13,7 @@ export const qrSessionList = async function (req, res, next) {
     endDate: req.query.endDate ? req.query.endDate : "",
     cursor: { type: OracleDB.CURSOR, dir: OracleDB.BIND_OUT },
   });
-  res.render("qr/sessionList", { title: "QR Sesion List", results, startDate: req.query.startDate, endDate: req.query.endDate });
+  res.render("qr/sessionList", { title: "QR Sesion List", user: req.user, results, startDate: req.query.startDate, endDate: req.query.endDate });
 };
 
 export const qrConfirm = async function (req, res, next) {
@@ -27,15 +27,12 @@ export const qrRegister = async function (req, res, next) {
 };
 
 export const qrRegisterVisitor = async function (req, res, next) {
-  const sql = qrquery.NSQPR_QRCODE_REGISTER;
-  console.log(req.body);
-  const uuid = uuid() + "*";
-  const binds = [...req.body, uuid];
-  console.log(binds);
-  // let results = await dbexecuteCur(sql, binds);
-  // // res.render('qrConfirm',  { title: 'QR Sesion List' , access });
-  // console.log(results.rows[0])
-  res.redirect("/qr/confirm?uuid=" + results.uuid);
+  const sql = qrquery.NSQPR_QRCODE_VISITOR_INS;
+  const newuuid = uuid() + "*";
+  const binds = [req.body.DS_HNAME, req.body.DS_PHONE, req.body.DS_DEPT, ...req.body.DT_BOOKING_RANGE.split(" - "), req.body.DS_PURPOSE, newuuid];
+
+  await dbexecute(sql, binds);
+  res.redirect("/qr/confirm?uuid=" + newuuid);
 };
 
 export const qrVisitorGet = async function (req, res, next) {
@@ -69,12 +66,9 @@ export const qrComplete = async function (req, res, next) {
 };
 
 export const qrTest = async function (req, res, next) {
-  const sql = qrquery.NSQPR_TEST;
-  let results = await dbexecuteCur(sql, {
-    id: 3,
-    cursor: { type: OracleDB.CURSOR, dir: OracleDB.BIND_OUT },
-  });
-  res.send(results);
+  const sql = "SELECT * FROM NSQT_QRCODE_SESSION";
+  let result = await dbexecute(sql, []);
+  res.send(result);
 };
 
 export const qrImage = async function (req, res, next) {
@@ -103,7 +97,7 @@ export const excelUpload = async function (req, res, next) {
 
       // const metaData = []
       const binds = [];
-      for (i in sheet1) {
+      for (const i in sheet1) {
         // if(i==1)
         //     Object.keys(sheet1[i]).forEach(function(key){metaData.push(sheet1[i][key]);});
         if (i > 1) {
@@ -117,7 +111,7 @@ export const excelUpload = async function (req, res, next) {
       }
 
       // :ds_hname, :ds_phone, :ds_dept, :dt_booking_fr, :dt_booking_to, :ds_purpose, :cd_uuid
-      sql = qrquery.NSQPR_QRCODE_EXCEL_UPLOAD;
+      const sql = qrquery.NSQPR_QRCODE_VISITOR_INS;
       const result = await dbexecuteMany(sql, binds);
 
       res.json(result);

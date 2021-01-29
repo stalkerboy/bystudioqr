@@ -5,8 +5,7 @@ export const dbexecute = async function (sql, binds) {
   let results;
   try {
     conn = await OracleDB.getConnection();
-    if (binds) results = await conn.execute(sql, binds);
-    else results = await conn.execute(sql);
+    results = await conn.execute(sql, binds, { autoCommit: true });
   } catch (err) {
     console.error(err);
   } finally {
@@ -80,4 +79,16 @@ export const dbexecuteMany = async function (sql, binds) {
   }
 
   return result;
+};
+
+export const dbParseResult = function (result) {
+  const parsedresult = [];
+  result.rows.forEach((row) => {
+    const dic = {};
+    result.metaData.forEach((meta, index) => {
+      dic[meta.name] = row[index];
+    });
+    parsedresult.push(dic);
+  });
+  return parsedresult;
 };

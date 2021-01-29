@@ -1,10 +1,11 @@
 import * as qrService from "../service/qrService";
+import * as authService from "../service/authService";
 import Express from "express";
 
 export default function (passport) {
   const router = Express.Router();
 
-  router.get("/", qrService.qrSessionList);
+  router.get("/", authService.isAuthenticated, qrService.qrSessionList);
 
   router.get("/confirm", qrService.qrConfirm);
 
@@ -14,12 +15,14 @@ export default function (passport) {
 
   router.post("/complete", qrService.qrComplete);
 
-  router.post("/excelupload", qrService.excelUpload);
-  router.post("/delete", qrService.qrDelete);
+  router.post("/excelupload", authService.isAuthenticated, qrService.excelUpload);
+  router.post("/delete", authService.isAuthenticated, qrService.qrDelete);
 
   router.get("/register", qrService.qrRegister);
 
   router.post("/register", qrService.qrRegisterVisitor);
+
+  router.get("/test", qrService.qrTest);
 
   return router;
 }
